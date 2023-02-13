@@ -47,6 +47,31 @@ class ProductManager{
         }
         return product;
     }
+
+    updateProduct(id, title, description, price, thumbnail,code, stock) {
+        const product = getProductBy(id)
+        if(!product){
+            return;
+        }
+
+        product.title = title || product.title;
+        product.description = description || product.description;
+        product.price = price || product.price;
+        product.thumbnail = thumbnail || product.thumbnail;
+        product.code = code || product.code;
+        product.stock = stock || product.stock
+        
+    }
+
+    deleteProduct(id){
+        const productIndex = this.products.findIndex(product => product.id === id);
+        if(productIndex === -1){
+            console.log("Este producto no existe");
+            return;
+        }
+        this.products.splice(productIndex, 1);
+    }
+
 }
 
 const productManager = new ProductManager();
