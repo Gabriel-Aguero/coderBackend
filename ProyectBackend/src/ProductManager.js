@@ -77,4 +77,4 @@ class ProductManager{
 
 }
 
-module.exports = ProductManager;
+export default ProductManager;
