@@ -9,10 +9,10 @@ class ProductManager{
 
     addProduct(title, description, price, thumbnail, code, stock) {
 
-        // if(!title || !description || !price || !thumbnail || !code || !stock) {
-        //     console.log(`❗ Todos los campos son obligatorios `)
-        //     return;
-        // }
+        if(!title || !description || !price || !thumbnail || !code || !stock) {
+            console.log(`❗ Todos los campos son obligatorios `)
+            return;
+        }
 
 
         // console.log(`El codigo es: ${code} `);
@@ -39,7 +39,7 @@ class ProductManager{
         return this.products.find(product => product.code === code)
     }
 
-    getProduct(){
+    getProducts(){
         return this.products;
     }
 

@@ -8,7 +8,7 @@ const router = Router();
 // Recuperar Lista de Productos
 router.get('/', (req, res) => {
     
-    const products = productManager.getProduct();
+    const products = productManager.getProducts();
     res.send(products);
 })
 
