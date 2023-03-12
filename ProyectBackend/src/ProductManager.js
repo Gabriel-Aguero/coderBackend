@@ -1,4 +1,5 @@
 class ProductManager{ 
+
     constructor () {
         this.products = [];
         this.path = "";
@@ -14,11 +15,11 @@ class ProductManager{
         // }
 
 
-        if(this.getProductByCode(code)) {
-            console.log(`♦ El producto con el codigo ${code} ya existe `)
-            return;
-        }
-
+        // console.log(`El codigo es: ${code} `);
+        // if(this.getProductByCode(code)) {
+        //     console.log(`♦ El producto con el codigo ${code} ya existe `)
+        //     return;
+        // }
 
         const product =  {
             id: this.nextId,
@@ -77,4 +78,4 @@ class ProductManager{
 
 }
 
-export default ProductManager;
+module.exports = ProductManager;

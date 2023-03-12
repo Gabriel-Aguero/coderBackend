@@ -1,5 +1,4 @@
-import { Router } from 'express'
-
+const { Router } = require('express');
 const { addListener } = require('nodemon');
 const ProductsManager = require('../ProductManager');
 
@@ -8,11 +7,7 @@ const router = Router();
 
 // Recuperar Lista de Productos
 router.get('/', (req, res) => {
-    // if(req.query.limit){
-    //     res.send('Devuelve listado limitado de productos')
-    // }else {
-    //     res.json(ProductManager.getProduct);
-    // }
+    
     const products = productManager.getProduct();
     res.send(products);
 })
@@ -20,7 +15,6 @@ router.get('/', (req, res) => {
 //Cargar Productos
 router.post('/', (req, res) => {
     const newProducts = {...req.body } 
-    // const newProducts = req.body;
     productManager.addProduct(newProducts);
     res.send(newProducts);
 })
@@ -49,4 +43,4 @@ router.put('/:id', (req, res) => {
     res.send(productManager.updateProduct(newProducts));
 })
 
-module.exports = router;
+module.exports = router; 

@@ -1,5 +1,6 @@
 const express = require("express");
 const productRoutes = require("./routes/products.routes");
+const cartRoutes = require("./routes/carts.routes");
 
 const PORT = 5000;
 
@@ -17,11 +18,11 @@ app.get(`/${BASE_PREFIX}/alive`, (req, res) => {
 });
 
 app.use(`/${BASE_PREFIX}/products`, productRoutes);
-app.use(`/${BASE_PREFIX}/carts`, cartRoutes);
+app.use(`/${BASE_PREFIX}/carts`, cartRoutes); 
+
 app.use((req, res) => {
     res.status(404).send('No se encontro la ruta...')
 })
-
 
 app.listen(PORT, () => {
   console.log(`API RUNNING ON PORT ${PORT}`);
