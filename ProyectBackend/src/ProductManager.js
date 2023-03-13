@@ -1,25 +1,3 @@
-const { readFile } = require('fs');
-const fs = require('fs/promises');
-
-let promesaEscritura = new Promise((resolve, reject) => {
-    fs.writeFile("", (err) => { 
-       if(err) {
-        reject(err);
-       } else {
-        resolve();
-       } 
-    })
-});
-
-
-class Product {
-    constructor(name, price, quantity, description) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.description = description;
-    }
-}
 class ProductManager {
 
     constructor(path) {
@@ -29,24 +7,30 @@ class ProductManager {
     }
 
     addProduct = async({ title, description, price, thumbnail, code, stock }) => {
-        try {
-            this.products = await this.getProduct(); 
-            if (this.products.length === 0) { 
-            const id = 1 
-            this.products.push({ id, title, description, price, thumbnail, code, stock }) 
-            return await fs.writeFile(this.path, JSON.stringify(this.products)) 
-        } 
-        else { 
-                const id = this.products.length + 1 
-                this.products.push({ id, title, description, price, thumbnail, code, stock })
-                return await fs.writeFile(this.path, JSON.stringify(this.products)) 
-             } 
-        } 
-        
-        catch (error) 
-        { 
-            console.log(error) 
+      
+        if(!title || !description || !price || !thumbnail || !code || !stock) {
+            console.log(`❗ Todos los campos son obligatorios `)
+            return;
         }
+
+        // console.log(`El codigo es: ${code} `);
+        // if(this.getProductByCode(code)) {
+        //     console.log(`♦ El producto con el codigo ${code} ya existe `)
+        //     return;
+        // }
+
+        const product =  {
+            id: this.nextId,
+            title: title,
+            description: description,
+            price: price,
+            thumbnail: thumbnail,
+            code: code,
+            stock: stock
+        };
+        this.nextId++;
+        this.products.push(product);
+        console.log('Productos Agregados Correctamente!!!')
         
     }
 
@@ -80,3 +64,5 @@ class ProductManager {
     }
 
 }
+
+module.exports = ProductManager;
