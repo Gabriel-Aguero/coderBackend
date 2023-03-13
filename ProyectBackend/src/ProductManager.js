@@ -1,59 +1,62 @@
-class ProductManager{ 
+const { readFile } = require('fs');
+const fs = require('fs/promises');
 
-    constructor () {
+let promesaEscritura = new Promise((resolve, reject) => {
+    fs.writeFile("", (err) => { 
+       if(err) {
+        reject(err);
+       } else {
+        resolve();
+       } 
+    })
+});
+
+
+class Product {
+    constructor(name, price, quantity, description) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+    }
+}
+class ProductManager {
+
+    constructor(path) {
         this.products = [];
-        this.path = "";
+        this.path = path;
         this.nextId = 1;
     }
 
-
-    addProduct(title, description, price, thumbnail, code, stock) {
-
-        if(!title || !description || !price || !thumbnail || !code || !stock) {
-            console.log(`❗ Todos los campos son obligatorios `)
-            return;
+    addProduct = async({ title, description, price, thumbnail, code, stock }) => {
+        try {
+            this.products = await this.getProduct(); 
+            if (this.products.length === 0) { 
+            const id = 1 
+            this.products.push({ id, title, description, price, thumbnail, code, stock }) 
+            return await fs.writeFile(this.path, JSON.stringify(this.products)) 
+        } 
+        else { 
+                const id = this.products.length + 1 
+                this.products.push({ id, title, description, price, thumbnail, code, stock })
+                return await fs.writeFile(this.path, JSON.stringify(this.products)) 
+             } 
+        } 
+        
+        catch (error) 
+        { 
+            console.log(error) 
         }
-
-
-        // console.log(`El codigo es: ${code} `);
-        // if(this.getProductByCode(code)) {
-        //     console.log(`♦ El producto con el codigo ${code} ya existe `)
-        //     return;
-        // }
-
-        const product =  {
-            id: this.nextId,
-            title: title,
-            description: description,
-            price: price,
-            thumbnail: thumbnail,
-            code: code,
-            stock: stock
-        };
-        this.nextId++;
-        this.products.push(product);
-        console.log('Productos Agregados Correctamente!!!')
+        
     }
 
-    getProductByCode(code) {
-        return this.products.find(product => product.code === code)
-    }
-
-    getProducts(){
+    getProduct(){
         return this.products;
     }
 
-    getProductById(id){
-        const product = this.products.find(product => product.id === id);
-        if(!product){
-         console.log(`Not found`);            
-        }
-        return product;
-    }
-
-    updateProduct(id, title, description, price, thumbnail,code, stock) {
+    updateProduct(id, title, description, price, thumbnail, code, stock) {
         const product = this.getProductById(id)
-        if(!product){
+        if (!product) {
             return;
         }
 
@@ -68,7 +71,7 @@ class ProductManager{
 
     deleteProduct(id){
         const productIndex = this.products.findIndex(product => product.id === id);
-        if(productIndex === -1){
+        if (productIndex === -1) {
             console.log("Este producto no existe");
             return;
         }
@@ -77,5 +80,3 @@ class ProductManager{
     }
 
 }
-
-module.exports = ProductManager;
