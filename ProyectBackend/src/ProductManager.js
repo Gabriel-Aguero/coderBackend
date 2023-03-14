@@ -1,16 +1,4 @@
-const { readFile } = require('fs');
 const fs = require('fs/promises');
-
-let promesaEscritura = new Promise((resolve, reject) => {
-    fs.writeFile("", (err) => { 
-       if(err) {
-        reject(err);
-       } else {
-        resolve();
-       } 
-    })
-});
-
 
 class Product {
     constructor(name, price, quantity, description) {
@@ -50,7 +38,7 @@ class ProductManager {
         
     }
 
-    getProduct(){
+    getProduct(){      
         return this.products;
     }
 
